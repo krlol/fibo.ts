@@ -20,5 +20,13 @@
     },
     "functions": {
         "port": 5001
-    }
+    },
+    "extraRepos": [
+        {
+            "repo": "git@github.com:CharroCel/web-react.git",
+            "name": "web-react",
+            "start": "yarn run dev",
+            "corePath": "/core"
+        }
+    ]
 }
