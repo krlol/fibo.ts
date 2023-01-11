@@ -1,0 +1,45 @@
+{
+    "name": "CharroCel",
+    "shortname": "cahrrocel",
+    "firebase": {
+        "repo": "git@github.com:CharroCel/firebase.git",
+        "name": "firebase"
+    },
+    "admin": {
+        "repo": "git@github.com:CharroCel/web-admin.git",
+        "name": "web-admin"
+    },
+    "functions": {
+        "port": 5001
+    },
+    "rn": {
+        "port": 8081
+    },
+    "repos":[
+        {
+            "gitHubSshUrl": "git@github.com:CharroCel/firebase.git",
+            "name": "firebase"
+        },
+        {
+            "gitHubSshUrl": "",
+            "name": "web-admin"
+        },
+        {
+            "gitHubSshUrl": "git@github.com:CharroCel/mobile-react-native.git",
+            "name": "rnative"
+        },
+        {
+            "gitHubSshUrl": "git@github.com:CharroCel/web-react.git",
+            "name": "web-react"
+        },
+        {
+            "gitHubSshUrl": "git@github.com:CharroCel/mobile_native_android.git",
+            "name": "mobile_native_android"
+        },
+        {
+            "gitHubSshUrl": "git@github.com:CharroCel/mobile_native_iOS.git",
+            "name": "mobile_native_iOS",
+            "required": false
+        }
+    ]
+}
