@@ -70,10 +70,14 @@ const checkYesNo = (toCheck) => {
 }
 
 const getMissingRepos = () => {
-    var missingRepos = []
     var proms = []
     var reposToInstall = []
-    config.repos.forEach((repo)=>{
+    var toCheck = [];
+    toCheck.push(config.admin)
+    toCheck.push(config.core)
+    toCheck.push(config.firebase)
+    toCheck.push(config.reactNative)
+    toCheck.forEach((repo)=>{
         // directory to check if exists
         const dir = `../${repo.name}`;
         proms.push(new Promise((resolve)=>{
@@ -127,7 +131,7 @@ const start = () => {
         exec(`ttab -t '${functionsEmoji} Functions TypeScript' 'cd ${firebasePath}/functions && tsc -w'`);
 
         //React Native
-        const rnPort = config.rn.port || 8081;
+        const rnPort = config.reactNative.port || 8081;
         const rnEmoji = '📱';
         console.log(`${rnEmoji} Starting React Native server on port ${rnPort}...`)
         exec(`ttab -t '${rnEmoji} React Native Metro Server' 'cd ${rnPath} && yarn start --port ${rnPort}'`);
@@ -139,7 +143,7 @@ const start = () => {
         const webCore = `${webPath}/core`;
         const adminCore = `${adminPath}/app/core`;
         const rnCore = `${rnPath}/core`;
-        console.log(`${coreEmoji} - Watching 👀 changes...`)
+        console.log(`${coreEmoji} - Watching core 👀 changes...`)
         fs.watch(coreFullPath, { recursive: true }, (eventType, filename) => {
             fse.copySync(coreFullPath, firebaseCore, { overwrite: true });
             fse.copySync(coreFullPath, webCore, { overwrite: true });
