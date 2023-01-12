@@ -1,10 +1,5 @@
-/* 
+// fibo.ts - Firebase, firestore, React Native and ReactJS CRUD Ecosystem builder in TypeScript 💚.
 
-karlol.ts - Firebase, firestore, React Native and ReactJS CRUD Ecosystem builder in TypeScript 💚.
-
-karlo@karlol.com
-
-*/
 const argumentos = process.argv.slice(2)
 const config = require('./config.json');
 const package = require('./package.json');
@@ -15,7 +10,7 @@ const skipTabs = argumentos.includes('skipTabs');
 const printSignature = () => {
     return console.log(`
     ┌──────────────────────────────┐
-    │     karlol.js Boilerplate    │
+    │      fibo.ts Boilerplate     │
     │         - TypeScript         │
     │- Firebase Hosting & Functions│
     │        - React Native        │
@@ -89,15 +84,21 @@ const getMissingRepos = () => {
             // check if directory exists
             fs.access(dir, async (err) => {
                 const required = (repo.required === true || repo.required === undefined)
+                if(err){
+                    console.log(`${repo.name} was added to install queue`);
+                    reposToInstall.push(repo);
+                }
                 if(err && required){
                     //does not exist
                     console.error(`${repo.name} repo ❌ doesn't exist and it's required...`);
-                    if(required === true){
-                        reposToInstall.push(repo);
-                    }               
                 }else{
                     //exists
-                    console.log(`${repo.name} repo exists or is not required ✅`);
+                    if(required === true){
+                        console.log(`${repo.name} repo exists`);
+                    }else{
+                        console.log(`${repo.name} is not required ✅ (but does not exists)`);
+                    }
+                    
                 }
                 return resolve(true);
             })

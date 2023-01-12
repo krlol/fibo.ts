@@ -1,8 +1,8 @@
 {
-    "name": "karlol.ts",
+    "name": "fibo-ts",
     "version": "0.0.1",
-    "description": "Firebase, firestore, React Native and ReactJS CRUD Ecosystem builder in TypeScript",
-    "private": true,
+    "description": "fibo.ts - Firebase, firestore, React Native and ReactJS CRUD Ecosystem builder in TypeScript",
+    "private": false,
     "scripts": {
         "start": "node ./start.js start",
         "dev": "nodedemon ./start.js"
