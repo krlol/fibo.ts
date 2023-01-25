@@ -172,8 +172,17 @@ const start = () => {
     })
 }
 
+const deployFunctions = () => {
+    var deployFunctionsCommand = config.functions.customDeploy || `cd .. && cd firebase && firebase deploy --only functions`;
+    exec(`ttab -t 'Functions Deploy' '${deployFunctionsCommand}'`)
+}
+
 if(argumentos.includes('start')){
     start();
+}
+
+if(argumentos.includes('deployFunctions')){
+    deployFunctions();
 }
 
 if(argumentos.includes('getMissingRepos')){

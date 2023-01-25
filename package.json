@@ -1,11 +1,12 @@
 {
     "name": "fibo-ts",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "description": "fibo.ts - Firebase, firestore, React Native and ReactJS CRUD Ecosystem builder in TypeScript",
     "private": false,
     "scripts": {
         "start": "node ./start.js start",
-        "dev": "nodedemon ./start.js"
+        "dev": "nodedemon ./start.js",
+        "deployFunctions": "node ./start.js deployFunctions"
     },
     "dependencies": {
         "chokidar": "^3.5.3",
