@@ -129,8 +129,8 @@ const start = () => {
         //Firebase
         const functionsPort = config.functions.port || 5001;
         const functionsEmoji = '🌟';
-        console.log(`${functionsEmoji} Starting firebase functions server on port ${functionsPort}...`)
-        skipTabs !== true && exec(`ttab -w 'cd .. && cd ${config.firebase.name} && firebase serve --only functions -p ${functionsPort}'`);
+        //console.log(`${functionsEmoji} Starting firebase functions server on port ${functionsPort}...`)
+        //skipTabs !== true && exec(`ttab -w 'cd .. && cd ${config.firebase.name} && firebase serve --only functions -p ${functionsPort}'`);
 
         //Functions TSC
         console.log(`${functionsEmoji} Starting to watch type changes on functions...`)
@@ -169,6 +169,10 @@ const start = () => {
                 skipTabs !== true && exec(`ttab -t '${eR.name}' 'cd .. && cd ${eR.name} && ${eR.start}'`);
             }
         })
+        serveFirebaseSuite();
+        setTimeout(() => {
+            stripeServer();
+        }, 2000);
     })
 }
 
@@ -177,11 +181,25 @@ const deployFunctions = () => {
     exec(`ttab -t 'Functions Deploy' '${deployFunctionsCommand}'`)
 }
 
+const serveFirebaseSuite = () => {
+    //const locationGcSdk = config.functions.gcsdkLocation || `~/google-cloud-sdk`
+    //exec(`${locationGcSdk}/bin/gsutil -m cp -r gs://charrocel-b0e1a.appspot.com/2023-02-11T18:48:29_97031 .`)
+    exec(`ttab -t 'Firebase' 'cd .. && cd firebase && firebase emulators:start --import ./dbs/1'`)
+}
+
+const stripeServer = () => {
+    exec(`ttab -t 'Stripe' 'stripe listen --forward-to http://127.0.0.1:5001/charrocel-b0e1a/us-central1/stripeChargeSucceeded'`)
+}
+
 if(argumentos.includes('start')){
     start();
 }
 
 if(argumentos.includes('deployFunctions')){
+    deployFunctions();
+}
+
+if(argumentos.includes('serveFirebaseSuite')){
     deployFunctions();
 }
 

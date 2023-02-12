@@ -3,7 +3,8 @@
     "shortName": "charrocel",
     "firebase": {
         "repo": "git@github.com:CharroCel/firebase.git",
-        "name": "firebase"
+        "name": "firebase",
+        "gcsdkLocation": "~/google-cloud-sdk"
     },
     "admin": {
         "repo": "git@github.com:CharroCel/web-admin.git",
