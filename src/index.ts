@@ -1,12 +1,15 @@
 // fibo.ts - Firebase, firestore, React Native and ReactJS CRUD Ecosystem builder in TypeScript 💚.
 
+import { helloStripe } from "./private/utils/stripe";
+
 const argumentos = process.argv.slice(2)
-const config = require('./config.json');
-const package = require('./package.json');
+const config = require('../config.json');
+const pkgJson = require('../package.json');
 const fs = require('fs');
 const { exec } = require('node:child_process')
 const fse = require('fs-extra');
 const skipTabs = argumentos.includes('skipTabs');
+console.log(`${helloStripe}`);
 const printSignature = () => {
     return console.log(`
     ┌──────────────────────────────┐
@@ -22,7 +25,7 @@ const printSignature = () => {
     │  stuff with this software.   │
     │                              │
     └──────────────────────────────┘
-    v${package.version}
+    v${pkgJson.version}
     `)
 }
 
@@ -55,7 +58,7 @@ var twirlTimer = (function() {
 })();
 */
 
-const checkYesNo = (toCheck) => {
+const checkYesNo = (toCheck:string):boolean => {
     var res = false;
     const yesAleternatives = ['yes', 'y'];
     yesAleternatives.forEach((ya)=>{
@@ -69,20 +72,20 @@ const checkYesNo = (toCheck) => {
 const extraRepos = config.extraRepos || []
 
 const getMissingRepos = () => {
-    var proms = []
+    var proms:Promise<any>[] = []
     var reposToInstall = []
     var toCheck = [];
     toCheck.push(config.admin)
     toCheck.push(config.core)
     toCheck.push(config.firebase)
     toCheck.push(config.reactNative)
-    extraRepos.forEach((er)=>toCheck.push(er))
+    extraRepos.forEach((er:any)=>toCheck.push(er))
     toCheck.forEach((repo)=>{
         // directory to check if exists
         const dir = `../${repo.name}`;
         proms.push(new Promise((resolve)=>{
             // check if directory exists
-            fs.access(dir, async (err) => {
+            fs.access(dir, async (err:any) => {
                 const required = (repo.required === true || repo.required === undefined)
                 if(err){
                     console.log(`${repo.name} was added to install queue`);
@@ -127,7 +130,7 @@ const start = () => {
         //const webPath = '../web-react';
 
         //Firebase
-        const functionsPort = config.functions.port || 5001;
+        //const functionsPort = config.functions.port || 5001;
         const functionsEmoji = '🌟';
         //console.log(`${functionsEmoji} Starting firebase functions server on port ${functionsPort}...`)
         //skipTabs !== true && exec(`ttab -w 'cd .. && cd ${config.firebase.name} && firebase serve --only functions -p ${functionsPort}'`);
@@ -149,11 +152,11 @@ const start = () => {
         const adminCore = `${adminPath}/app/core`;
         const rnCore = `${rnPath}/core`;
         console.log(`${coreEmoji} - Watching core 👀 changes...`)
-        fs.watch(coreFullPath, { recursive: true }, (eventType, filename) => {
+        fs.watch(coreFullPath, { recursive: true }, (eventType:any, filename:any) => {
             fse.copySync(coreFullPath, firebaseCore, { overwrite: true });
             fse.copySync(coreFullPath, adminCore, { overwrite: true });
             fse.copySync(coreFullPath, rnCore, { overwrite: true });
-            extraRepos.forEach((eRepo)=>{
+            extraRepos.forEach((eRepo:any)=>{
                 const tCore = `../${eRepo.name}${eRepo.corePath}`;
                 fse.copySync(coreFullPath, tCore, { overwrite: true });
             })
@@ -162,7 +165,7 @@ const start = () => {
         skipTabs !== true && exec(`ttab -t 'local tsc' tsc -w`)
 
         //Extra
-        extraRepos.forEach((eR)=>{
+        extraRepos.forEach((eR:any)=>{
             const eEmoji = eR.emoji || '➕'
             if(eR.start !== undefined){
                 console.log(`${eEmoji} - Starting ${eR.name}...`)
