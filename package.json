@@ -6,6 +6,7 @@
     "main": "lib/index.js",
     "scripts": {
         "start": "node ./lib/index.js start",
+        "core": "node ./lib/index.js core",
         "dev": "nodedemon ./lib/index.js",
         "deployFunctions": "node ./lib/index.js deployFunctions"
     },

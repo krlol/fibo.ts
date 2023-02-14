@@ -145,24 +145,7 @@ const start = () => {
         console.log(`${rnEmoji} Starting React Native server on port ${rnPort}...`)
         skipTabs !== true && exec(`ttab -t 'React Native Metro Server' 'cd ${rnPath} && yarn start --port ${rnPort}'`);
 
-        //Core libraries
-        const coreEmoji = '🪐'
-        //exec(`ttab -t '${coreEmoji} Core Types' 'cd ${firebasePath}/functions && tsc -w'`);
-        const firebaseCore = `${firebasePath}/functions/src/core`;
-        const adminCore = `${adminPath}/app/core`;
-        const rnCore = `${rnPath}/core`;
-        console.log(`${coreEmoji} - Watching core 👀 changes...`)
-        fs.watch(coreFullPath, { recursive: true }, (eventType:any, filename:any) => {
-            fse.copySync(coreFullPath, firebaseCore, { overwrite: true });
-            fse.copySync(coreFullPath, adminCore, { overwrite: true });
-            fse.copySync(coreFullPath, rnCore, { overwrite: true });
-            extraRepos.forEach((eRepo:any)=>{
-                const tCore = `../${eRepo.name}${eRepo.corePath}`;
-                fse.copySync(coreFullPath, tCore, { overwrite: true });
-            })
-            console.log(`${coreEmoji} - ${filename} synced`)
-        })
-        skipTabs !== true && exec(`ttab -t 'local tsc' tsc -w`)
+        core();
 
         //Extra
         extraRepos.forEach((eR:any)=>{
@@ -177,6 +160,32 @@ const start = () => {
             stripeServer();
         }, 2000);
     })
+}
+
+const core = () => {
+    const firebasePath = `../${config.firebase.name}`;
+        const rnPath = `../${config.reactNative.name}`;
+        const corePath = `../${config.core.name}`;
+        const coreFullPath = `${corePath}/core`
+        const adminPath = `../${config.admin.name}`;
+    //Core libraries
+    const coreEmoji = '🪐'
+    //exec(`ttab -t '${coreEmoji} Core Types' 'cd ${firebasePath}/functions && tsc -w'`);
+    const firebaseCore = `${firebasePath}/functions/src/core`;
+    const adminCore = `${adminPath}/app/core`;
+    const rnCore = `${rnPath}/core`;
+    console.log(`${coreEmoji} - Watching core 👀 changes...`)
+    fs.watch(coreFullPath, { recursive: true }, (eventType:any, filename:any) => {
+        fse.copySync(coreFullPath, firebaseCore, { overwrite: true });
+        fse.copySync(coreFullPath, adminCore, { overwrite: true });
+        fse.copySync(coreFullPath, rnCore, { overwrite: true });
+        extraRepos.forEach((eRepo:any)=>{
+            const tCore = `../${eRepo.name}${eRepo.corePath}`;
+            fse.copySync(coreFullPath, tCore, { overwrite: true });
+        })
+        console.log(`${coreEmoji} - ${filename} synced`)
+    })
+    skipTabs !== true && exec(`ttab -t 'local tsc' tsc -w`)
 }
 
 const deployFunctions = () => {
@@ -208,4 +217,8 @@ if(argumentos.includes('serveFirebaseSuite')){
 
 if(argumentos.includes('getMissingRepos')){
     getMissingRepos();
+}
+
+if(argumentos.includes('core')){
+    core();
 }
